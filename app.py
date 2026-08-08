@@ -100,11 +100,14 @@ def randevu():
         print("Görüşme Konusu:", service)
         print("------------------------")
 
-        return """
-        <h2>Randevu talebiniz alındı! ✅</h2>
-        <p>Bilgileriniz başarıyla kaydedildi.</p>
-        <a href="/">Ana Sayfaya Dön</a>
-        """
+        # Başarılı randevu ekranına gönder
+        return render_template(
+            "randevu-basarili.html",
+            name=name,
+            email=email,
+            phone=phone,
+            service=service
+        )
 
     # Sayfa ilk açıldığında
     return render_template("randevu.html")

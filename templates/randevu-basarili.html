@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Randevu Başarılı | Kadir Yazılım</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            font-family: Arial, Helvetica, sans-serif;
+            background:
+                radial-gradient(circle at top, rgba(0, 183, 255, 0.14), transparent 40%),
+                #071018;
+            color: #fff;
+        }
+
+        .success-page {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 30px 20px;
+        }
+
+        .success-card {
+            width: 100%;
+            max-width: 620px;
+            padding: 45px 40px;
+            text-align: center;
+
+            background: rgba(12, 25, 36, 0.92);
+            border: 1px solid rgba(0, 200, 255, 0.18);
+            border-radius: 28px;
+
+            box-shadow:
+                0 25px 70px rgba(0, 0, 0, 0.45),
+                0 0 50px rgba(0, 180, 255, 0.08);
+
+            animation: cardIn 0.6s ease;
+        }
+
+        @keyframes cardIn {
+            from {
+                opacity: 0;
+                transform: translateY(25px) scale(0.97);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .success-icon {
+            width: 90px;
+            height: 90px;
+            margin: 0 auto 25px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 50%;
+
+            background: rgba(0, 220, 150, 0.12);
+            border: 2px solid rgba(0, 220, 150, 0.45);
+
+            color: #00dc96;
+            font-size: 38px;
+
+            box-shadow: 0 0 35px rgba(0, 220, 150, 0.12);
+
+            animation: iconPop 0.7s ease 0.2s both;
+        }
+
+        @keyframes iconPop {
+            from {
+                opacity: 0;
+                transform: scale(0.5);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .success-badge {
+            display: inline-block;
+            margin-bottom: 15px;
+            padding: 7px 14px;
+
+            border-radius: 50px;
+
+            background: rgba(0, 200, 255, 0.1);
+            border: 1px solid rgba(0, 200, 255, 0.2);
+
+            color: #42d9ff;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+
+        .success-card h1 {
+            margin: 0 0 15px;
+            font-size: clamp(28px, 5vw, 40px);
+            line-height: 1.15;
+        }
+
+        .success-card h1 span {
+            color: #27c9ff;
+        }
+
+        .success-description {
+            margin: 0 auto 30px;
+            max-width: 480px;
+
+            color: #aebdca;
+            line-height: 1.7;
+            font-size: 15px;
+        }
+
+        .appointment-info {
+            text-align: left;
+            padding: 22px;
+
+            background: rgba(255, 255, 255, 0.035);
+            border: 1px solid rgba(255, 255, 255, 0.07);
+            border-radius: 18px;
+
+            margin-bottom: 25px;
+        }
+
+        .info-title {
+            margin-bottom: 18px;
+
+            font-size: 14px;
+            font-weight: 700;
+            color: #fff;
+        }
+
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
+
+            padding: 12px 0;
+
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        }
+
+        .info-row:last-child {
+            border-bottom: none;
+        }
+
+        .info-label {
+            color: #8798a6;
+            font-size: 13px;
+        }
+
+        .info-value {
+            color: #fff;
+            font-size: 13px;
+            font-weight: 600;
+            text-align: right;
+            word-break: break-word;
+        }
+
+        .status {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+
+            padding: 6px 10px;
+            border-radius: 30px;
+
+            background: rgba(255, 193, 7, 0.1);
+            border: 1px solid rgba(255, 193, 7, 0.2);
+
+            color: #ffc107;
+        }
+
+        .success-actions {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+        }
+
+        .success-actions a {
+            flex: 1;
+
+            min-height: 50px;
+            padding: 14px 20px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+
+            border-radius: 12px;
+
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 700;
+
+            transition: 0.25s ease;
+        }
+
+        .home-btn {
+            background: #18bdf5;
+            color: #041018;
+            box-shadow: 0 10px 25px rgba(24, 189, 245, 0.18);
+        }
+
+        .home-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 30px rgba(24, 189, 245, 0.28);
+        }
+
+        .new-btn {
+            background: rgba(255, 255, 255, 0.06);
+            color: #fff;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .new-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .footer-text {
+            margin-top: 25px;
+            color: #647482;
+            font-size: 12px;
+        }
+
+        @media (max-width: 600px) {
+
+            .success-page {
+                padding: 20px 14px;
+            }
+
+            .success-card {
+                padding: 32px 20px;
+                border-radius: 22px;
+            }
+
+            .success-icon {
+                width: 75px;
+                height: 75px;
+                font-size: 30px;
+            }
+
+            .appointment-info {
+                padding: 17px;
+            }
+
+            .info-row {
+                flex-direction: column;
+                gap: 5px;
+            }
+
+            .info-value {
+                text-align: left;
+            }
+
+            .success-actions {
+                flex-direction: column;
+            }
+
+            .success-actions a {
+                width: 100%;
+            }
+        }
+
+    </style>
+</head>
+
+<body>
+
+<div class="success-page">
+
+    <div class="success-card">
+
+        <div class="success-icon">
+            <i class="fa-solid fa-check"></i>
+        </div>
+
+        <div class="success-badge">
+            KADİR YAZILIM GÖRÜŞME MERKEZİ
+        </div>
+
+        <h1>
+            Randevunuz <span>Alındı!</span>
+        </h1>
+
+        <p class="success-description">
+            Randevu talebiniz başarıyla oluşturuldu.
+            Bilgileriniz güvenli şekilde kaydedildi.
+            Görüşmenizle ilgili gerekli bilgiler sizinle paylaşılacaktır.
+        </p>
+
+        <div class="appointment-info">
+
+            <div class="info-title">
+                <i class="fa-solid fa-calendar-check"></i>
+                Randevu Bilgileri
+            </div>
+
+            <div class="info-row">
+                <span class="info-label">Ad Soyad</span>
+                <span class="info-value">{{ name }}</span>
+            </div>
+
+            <div class="info-row">
+                <span class="info-label">E-posta</span>
+                <span class="info-value">{{ email }}</span>
+            </div>
+
+            <div class="info-row">
+                <span class="info-label">Telefon</span>
+                <span class="info-value">{{ phone }}</span>
+            </div>
+
+            <div class="info-row">
+                <span class="info-label">Görüşme Konusu</span>
+                <span class="info-value">{{ service }}</span>
+            </div>
+
+            <div class="info-row">
+                <span class="info-label">Randevu Durumu</span>
+
+                <span class="info-value">
+                    <span class="status">
+                        <i class="fa-solid fa-clock"></i>
+                        Beklemede
+                    </span>
+                </span>
+            </div>
+
+        </div>
+
+        <div class="success-actions">
+
+            <a href="/" class="home-btn">
+                <i class="fa-solid fa-house"></i>
+                Ana Sayfa
+            </a>
+
+            <a href="/randevu" class="new-btn">
+                <i class="fa-solid fa-calendar-plus"></i>
+                Yeni Randevu
+            </a>
+
+        </div>
+
+        <div class="footer-text">
+            Kadir Yazılım • Yeni nesil yazılım deneyimi
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+</html>

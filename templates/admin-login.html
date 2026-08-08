@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Admin Girişi | Kadir Yazılım</title>
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            padding: 20px;
+
+            font-family: Arial, Helvetica, sans-serif;
+
+            background:
+                radial-gradient(
+                    circle at top,
+                    rgba(0, 190, 255, 0.15),
+                    transparent 40%
+                ),
+                #071018;
+
+            color: #fff;
+        }
+
+        .login-card {
+            width: 100%;
+            max-width: 430px;
+
+            padding: 40px 35px;
+
+            background: rgba(12, 25, 36, 0.94);
+
+            border: 1px solid rgba(0, 200, 255, 0.18);
+
+            border-radius: 25px;
+
+            box-shadow:
+                0 25px 70px rgba(0, 0, 0, 0.45),
+                0 0 45px rgba(0, 180, 255, 0.08);
+
+            animation: loginIn .5s ease;
+        }
+
+        @keyframes loginIn {
+            from {
+                opacity: 0;
+                transform: translateY(25px) scale(.97);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .logo {
+            width: 75px;
+            height: 75px;
+
+            margin: 0 auto 20px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 20px;
+
+            background: rgba(0, 190, 255, .1);
+
+            border: 1px solid rgba(0, 200, 255, .25);
+
+            color: #22c8ff;
+
+            font-size: 30px;
+
+            box-shadow:
+                0 0 30px rgba(0, 190, 255, .1);
+        }
+
+        .top-title {
+            text-align: center;
+
+            color: #25c9ff;
+
+            font-size: 12px;
+
+            font-weight: 700;
+
+            letter-spacing: 2px;
+
+            margin-bottom: 10px;
+        }
+
+        h1 {
+            margin: 0;
+
+            text-align: center;
+
+            font-size: 30px;
+        }
+
+        .description {
+            text-align: center;
+
+            color: #8999a7;
+
+            font-size: 14px;
+
+            line-height: 1.6;
+
+            margin: 12px 0 30px;
+        }
+
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+        label {
+            display: block;
+
+            margin-bottom: 8px;
+
+            font-size: 13px;
+
+            color: #b7c5cf;
+
+            font-weight: 600;
+        }
+
+        .input-box {
+            position: relative;
+        }
+
+        .input-box i {
+            position: absolute;
+
+            left: 15px;
+            top: 50%;
+
+            transform: translateY(-50%);
+
+            color: #718492;
+
+            font-size: 14px;
+        }
+
+        input {
+            width: 100%;
+
+            height: 52px;
+
+            padding: 0 15px 0 44px;
+
+            border-radius: 12px;
+
+            border: 1px solid rgba(255,255,255,.09);
+
+            outline: none;
+
+            background: rgba(255,255,255,.045);
+
+            color: #fff;
+
+            font-size: 14px;
+
+            transition: .2s;
+        }
+
+        input::placeholder {
+            color: #60717e;
+        }
+
+        input:focus {
+            border-color: #1ec7ff;
+
+            background: rgba(0,190,255,.04);
+
+            box-shadow:
+                0 0 0 3px rgba(0,190,255,.08);
+        }
+
+        .login-btn {
+            width: 100%;
+
+            height: 52px;
+
+            margin-top: 8px;
+
+            border: 0;
+
+            border-radius: 12px;
+
+            cursor: pointer;
+
+            background: #18bdf5;
+
+            color: #041018;
+
+            font-size: 14px;
+
+            font-weight: 800;
+
+            transition: .25s;
+
+            box-shadow:
+                0 10px 25px rgba(24,189,245,.18);
+        }
+
+        .login-btn:hover {
+            transform: translateY(-2px);
+
+            box-shadow:
+                0 15px 30px rgba(24,189,245,.28);
+        }
+
+        .login-btn:active {
+            transform: translateY(0);
+        }
+
+        .error {
+            margin-bottom: 20px;
+
+            padding: 12px 14px;
+
+            border-radius: 10px;
+
+            background: rgba(255, 70, 70, .08);
+
+            border: 1px solid rgba(255, 70, 70, .18);
+
+            color: #ff7474;
+
+            font-size: 13px;
+
+            text-align: center;
+        }
+
+        .security {
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            gap: 7px;
+
+            margin-top: 24px;
+
+            color: #60717e;
+
+            font-size: 11px;
+        }
+
+        .security i {
+            color: #00d99a;
+        }
+
+        .back {
+            display: block;
+
+            margin-top: 20px;
+
+            text-align: center;
+
+            color: #6e8492;
+
+            font-size: 12px;
+
+            text-decoration: none;
+        }
+
+        .back:hover {
+            color: #20c8ff;
+        }
+
+        @media (max-width: 500px) {
+
+            .login-card {
+                padding: 32px 22px;
+
+                border-radius: 20px;
+            }
+
+            h1 {
+                font-size: 26px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="login-card">
+
+    <div class="logo">
+        <i class="fa-solid fa-shield-halved"></i>
+    </div>
+
+    <div class="top-title">
+        KADİR YAZILIM
+    </div>
+
+    <h1>Yönetici Girişi</h1>
+
+    <p class="description">
+        Randevu yönetim paneline erişmek için
+        yönetici bilgilerinizi girin.
+    </p>
+
+    {% if error %}
+        <div class="error">
+            <i class="fa-solid fa-circle-exclamation"></i>
+            {{ error }}
+        </div>
+    {% endif %}
+
+    <form method="POST">
+
+        <div class="form-group">
+
+            <label for="username">
+                Kullanıcı Adı
+            </label>
+
+            <div class="input-box">
+
+                <i class="fa-solid fa-user"></i>
+
+                <input
+                    type="text"
+                    id="username"
+                    name="username"
+                    placeholder="Kullanıcı adınız"
+                    autocomplete="username"
+                    required
+                >
+
+            </div>
+
+        </div>
+
+        <div class="form-group">
+
+            <label for="password">
+                Şifre
+            </label>
+
+            <div class="input-box">
+
+                <i class="fa-solid fa-lock"></i>
+
+                <input
+                    type="password"
+                    id="password"
+                    name="password"
+                    placeholder="Şifreniz"
+                    autocomplete="current-password"
+                    required
+                >
+
+            </div>
+
+        </div>
+
+        <button type="submit" class="login-btn">
+
+            <i class="fa-solid fa-right-to-bracket"></i>
+
+            Güvenli Giriş
+
+        </button>
+
+    </form>
+
+    <div class="security">
+
+        <i class="fa-solid fa-lock"></i>
+
+        Güvenli yönetici erişimi
+
+    </div>
+
+    <a href="/" class="back">
+
+        <i class="fa-solid fa-arrow-left"></i>
+
+        Ana sayfaya dön
+
+    </a>
+
+</div>
+
+</body>
+</html>

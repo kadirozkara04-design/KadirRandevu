@@ -1,0 +1,751 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Randevu Sorgula | Kadir Yazılım</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+
+            font-family:
+                Arial,
+                Helvetica,
+                sans-serif;
+
+            background:
+                radial-gradient(
+                    circle at top,
+                    rgba(0, 183, 255, 0.14),
+                    transparent 40%
+                ),
+                #071018;
+
+            color: #fff;
+        }
+
+        .query-page {
+
+            min-height: 100vh;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            padding: 30px 20px;
+        }
+
+        .query-card {
+
+            width: 100%;
+            max-width: 620px;
+
+            padding: 45px 40px;
+
+            text-align: center;
+
+            background:
+                rgba(12, 25, 36, 0.94);
+
+            border:
+                1px solid
+                rgba(0, 200, 255, 0.18);
+
+            border-radius: 28px;
+
+            box-shadow:
+                0 25px 70px
+                rgba(0, 0, 0, 0.45),
+
+                0 0 50px
+                rgba(0, 180, 255, 0.08);
+
+            animation: cardIn 0.6s ease;
+        }
+
+        @keyframes cardIn {
+
+            from {
+                opacity: 0;
+                transform:
+                    translateY(25px)
+                    scale(0.97);
+            }
+
+            to {
+                opacity: 1;
+                transform:
+                    translateY(0)
+                    scale(1);
+            }
+        }
+
+        .query-icon {
+
+            width: 85px;
+            height: 85px;
+
+            margin:
+                0 auto 25px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 50%;
+
+            background:
+                rgba(24, 189, 245, 0.10);
+
+            border:
+                2px solid
+                rgba(24, 189, 245, 0.35);
+
+            color: #27c9ff;
+
+            font-size: 32px;
+
+            box-shadow:
+                0 0 35px
+                rgba(24, 189, 245, 0.10);
+        }
+
+        .query-badge {
+
+            display: inline-block;
+
+            margin-bottom: 15px;
+
+            padding: 7px 14px;
+
+            border-radius: 50px;
+
+            background:
+                rgba(0, 200, 255, 0.10);
+
+            border:
+                1px solid
+                rgba(0, 200, 255, 0.20);
+
+            color: #42d9ff;
+
+            font-size: 12px;
+            font-weight: 700;
+
+            letter-spacing: 1px;
+        }
+
+        h1 {
+
+            margin: 0 0 15px;
+
+            font-size:
+                clamp(28px, 5vw, 40px);
+        }
+
+        h1 span {
+            color: #27c9ff;
+        }
+
+        .description {
+
+            max-width: 470px;
+
+            margin:
+                0 auto 30px;
+
+            color: #aebdca;
+
+            line-height: 1.7;
+
+            font-size: 15px;
+        }
+
+        .query-form {
+
+            display: flex;
+
+            gap: 10px;
+
+            margin-bottom: 20px;
+        }
+
+        .code-input {
+
+            flex: 1;
+
+            width: 100%;
+
+            padding: 16px 18px;
+
+            border-radius: 12px;
+
+            outline: none;
+
+            background:
+                rgba(255, 255, 255, 0.05);
+
+            border:
+                1px solid
+                rgba(255, 255, 255, 0.10);
+
+            color: #fff;
+
+            font-size: 15px;
+
+            transition: 0.25s ease;
+        }
+
+        .code-input:focus {
+
+            border-color:
+                rgba(39, 201, 255, 0.55);
+
+            box-shadow:
+                0 0 20px
+                rgba(39, 201, 255, 0.08);
+        }
+
+        .code-input::placeholder {
+            color: #71818d;
+        }
+
+        .query-button {
+
+            border: none;
+
+            padding:
+                0 22px;
+
+            border-radius: 12px;
+
+            background: #18bdf5;
+
+            color: #041018;
+
+            font-weight: 800;
+
+            cursor: pointer;
+
+            transition: 0.25s ease;
+
+            white-space: nowrap;
+        }
+
+        .query-button:hover {
+
+            transform:
+                translateY(-2px);
+
+            box-shadow:
+                0 12px 25px
+                rgba(24, 189, 245, 0.20);
+        }
+
+        .error-box {
+
+            margin-top: 15px;
+
+            padding: 14px;
+
+            border-radius: 12px;
+
+            background:
+                rgba(255, 70, 70, 0.08);
+
+            border:
+                1px solid
+                rgba(255, 70, 70, 0.20);
+
+            color: #ff8080;
+
+            font-size: 13px;
+        }
+
+        /* =========================
+           RANDEVU SONUCU
+        ========================= */
+
+        .result-card {
+
+            margin-top: 25px;
+
+            padding: 22px;
+
+            text-align: left;
+
+            background:
+                rgba(255, 255, 255, 0.035);
+
+            border:
+                1px solid
+                rgba(255, 255, 255, 0.07);
+
+            border-radius: 18px;
+
+            animation:
+                resultIn 0.5s ease;
+        }
+
+        @keyframes resultIn {
+
+            from {
+                opacity: 0;
+                transform:
+                    translateY(15px);
+            }
+
+            to {
+                opacity: 1;
+                transform:
+                    translateY(0);
+            }
+        }
+
+        .result-title {
+
+            display: flex;
+            align-items: center;
+
+            gap: 9px;
+
+            margin-bottom: 18px;
+
+            font-size: 15px;
+            font-weight: 700;
+        }
+
+        .result-title i {
+            color: #00dc96;
+        }
+
+        .result-row {
+
+            display: flex;
+
+            justify-content:
+                space-between;
+
+            gap: 20px;
+
+            padding: 12px 0;
+
+            border-bottom:
+                1px solid
+                rgba(255,255,255,0.06);
+        }
+
+        .result-row:last-child {
+            border-bottom: none;
+        }
+
+        .result-label {
+
+            color: #8798a6;
+
+            font-size: 13px;
+        }
+
+        .result-value {
+
+            color: #fff;
+
+            font-size: 13px;
+
+            font-weight: 600;
+
+            text-align: right;
+
+            word-break: break-word;
+        }
+
+        .appointment-code {
+
+            color: #27c9ff;
+
+            letter-spacing: 1.5px;
+        }
+
+        /* DURUMLAR */
+
+        .status {
+
+            display: inline-flex;
+
+            align-items: center;
+
+            gap: 6px;
+
+            padding: 7px 11px;
+
+            border-radius: 30px;
+
+            font-size: 12px;
+        }
+
+        .status-pending {
+
+            color: #ffc107;
+
+            background:
+                rgba(255, 193, 7, 0.10);
+
+            border:
+                1px solid
+                rgba(255, 193, 7, 0.20);
+        }
+
+        .status-approved {
+
+            color: #00dc96;
+
+            background:
+                rgba(0, 220, 150, 0.10);
+
+            border:
+                1px solid
+                rgba(0, 220, 150, 0.20);
+        }
+
+        .status-cancelled {
+
+            color: #ff6868;
+
+            background:
+                rgba(255, 70, 70, 0.10);
+
+            border:
+                1px solid
+                rgba(255, 70, 70, 0.20);
+        }
+
+        .back-button {
+
+            display: inline-flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            gap: 8px;
+
+            width: 100%;
+
+            min-height: 50px;
+
+            margin-top: 20px;
+
+            border-radius: 12px;
+
+            text-decoration: none;
+
+            background:
+                rgba(255, 255, 255, 0.06);
+
+            border:
+                1px solid
+                rgba(255, 255, 255, 0.10);
+
+            color: #fff;
+
+            font-size: 14px;
+
+            font-weight: 700;
+
+            transition: 0.25s ease;
+        }
+
+        .back-button:hover {
+
+            background:
+                rgba(255, 255, 255, 0.10);
+
+            transform:
+                translateY(-2px);
+        }
+
+        .footer {
+
+            margin-top: 25px;
+
+            color: #647482;
+
+            font-size: 12px;
+        }
+
+        @media (max-width: 600px) {
+
+            .query-page {
+                padding: 20px 14px;
+            }
+
+            .query-card {
+
+                padding:
+                    32px 20px;
+
+                border-radius: 22px;
+            }
+
+            .query-form {
+                flex-direction: column;
+            }
+
+            .query-button {
+
+                min-height: 50px;
+
+                width: 100%;
+            }
+
+            .result-card {
+                padding: 17px;
+            }
+
+            .result-row {
+
+                flex-direction:
+                    column;
+
+                gap: 5px;
+            }
+
+            .result-value {
+                text-align: left;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+<div class="query-page">
+
+    <div class="query-card">
+
+        <div class="query-icon">
+            <i class="fa-solid fa-magnifying-glass"></i>
+        </div>
+
+        <div class="query-badge">
+            KADİR YAZILIM GÖRÜŞME MERKEZİ
+        </div>
+
+        <h1>
+            Randevunuzu <span>Sorgulayın</span>
+        </h1>
+
+        <p class="description">
+            Randevu oluşturduktan sonra size verilen
+            randevu kodunu girerek randevu bilgilerinizi
+            ve güncel durumunuzu görüntüleyebilirsiniz.
+        </p>
+
+
+        <!-- SORGU FORMU -->
+
+        <form method="POST"
+              action="/randevu-sorgula"
+              class="query-form">
+
+            <input
+                type="text"
+                name="appointment_code"
+                class="code-input"
+                placeholder="Örn: KR-A83F21C4"
+                maxlength="20"
+                autocomplete="off"
+                required
+            >
+
+            <button
+                type="submit"
+                class="query-button">
+
+                <i class="fa-solid fa-magnifying-glass"></i>
+                Sorgula
+
+            </button>
+
+        </form>
+
+
+        <!-- HATA -->
+
+        {% if error %}
+
+        <div class="error-box">
+
+            <i class="fa-solid fa-circle-exclamation"></i>
+
+            {{ error }}
+
+        </div>
+
+        {% endif %}
+
+
+        <!-- SONUÇ -->
+
+        {% if appointment %}
+
+        <div class="result-card">
+
+            <div class="result-title">
+
+                <i class="fa-solid fa-circle-check"></i>
+
+                Randevu Bulundu
+
+            </div>
+
+
+            <div class="result-row">
+
+                <span class="result-label">
+                    Randevu Kodu
+                </span>
+
+                <span class="result-value appointment-code">
+                    {{ appointment[6] }}
+                </span>
+
+            </div>
+
+
+            <div class="result-row">
+
+                <span class="result-label">
+                    Ad Soyad
+                </span>
+
+                <span class="result-value">
+                    {{ appointment[1] }}
+                </span>
+
+            </div>
+
+
+            <div class="result-row">
+
+                <span class="result-label">
+                    E-posta
+                </span>
+
+                <span class="result-value">
+                    {{ appointment[2] }}
+                </span>
+
+            </div>
+
+
+            <div class="result-row">
+
+                <span class="result-label">
+                    Telefon
+                </span>
+
+                <span class="result-value">
+                    {{ appointment[3] }}
+                </span>
+
+            </div>
+
+
+            <div class="result-row">
+
+                <span class="result-label">
+                    Görüşme Konusu
+                </span>
+
+                <span class="result-value">
+                    {{ appointment[4] }}
+                </span>
+
+            </div>
+
+
+            <div class="result-row">
+
+                <span class="result-label">
+                    Randevu Durumu
+                </span>
+
+                <span class="result-value">
+
+                    {% if appointment[5] == "approved" %}
+
+                        <span class="status status-approved">
+                            <i class="fa-solid fa-circle-check"></i>
+                            Onaylandı
+                        </span>
+
+                    {% elif appointment[5] == "cancelled" %}
+
+                        <span class="status status-cancelled">
+                            <i class="fa-solid fa-circle-xmark"></i>
+                            İptal Edildi
+                        </span>
+
+                    {% else %}
+
+                        <span class="status status-pending">
+                            <i class="fa-solid fa-clock"></i>
+                            Beklemede
+                        </span>
+
+                    {% endif %}
+
+                </span>
+
+            </div>
+
+        </div>
+
+        {% endif %}
+
+
+        <a href="/" class="back-button">
+
+            <i class="fa-solid fa-house"></i>
+
+            Ana Sayfaya Dön
+
+        </a>
+
+
+        <div class="footer">
+
+            Kadir Yazılım • Yeni nesil yazılım deneyimi
+
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+
+</html>

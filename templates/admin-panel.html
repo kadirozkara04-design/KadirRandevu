@@ -1,0 +1,949 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Yönetim Paneli | Kadir Yazılım</title>
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, Helvetica, sans-serif;
+            background: #071018;
+            color: #fff;
+        }
+
+        .dashboard {
+            min-height: 100vh;
+        }
+
+        /* =========================
+           SIDEBAR
+        ========================== */
+
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 250px;
+            padding: 25px 18px;
+            background: #0b1721;
+            border-right: 1px solid rgba(255,255,255,.07);
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 5px 10px 30px;
+        }
+
+        .brand-icon {
+            width: 42px;
+            height: 42px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+            background: rgba(24,189,245,.1);
+            color: #19c3ff;
+            font-size: 19px;
+        }
+
+        .brand strong {
+            display: block;
+            font-size: 15px;
+        }
+
+        .brand span {
+            display: block;
+            margin-top: 3px;
+            color: #607482;
+            font-size: 10px;
+        }
+
+        .menu-title {
+            padding: 0 10px 10px;
+            color: #526673;
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+        }
+
+        .menu a {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 13px 12px;
+            margin-bottom: 5px;
+            border-radius: 10px;
+            color: #91a2ae;
+            text-decoration: none;
+            font-size: 13px;
+            transition: .2s;
+        }
+
+        .menu a:hover,
+        .menu a.active {
+            background: rgba(24,189,245,.09);
+            color: #20c8ff;
+        }
+
+        .menu a i {
+            width: 18px;
+            text-align: center;
+        }
+
+        .logout {
+            position: absolute;
+            left: 18px;
+            right: 18px;
+            bottom: 20px;
+        }
+
+        .logout a {
+            color: #ff7777 !important;
+        }
+
+        /* =========================
+           MAIN
+        ========================== */
+
+        .main {
+            margin-left: 250px;
+            padding: 30px;
+        }
+
+        .topbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .topbar h1 {
+            margin: 0;
+            font-size: 28px;
+        }
+
+        .topbar p {
+            margin: 7px 0 0;
+            color: #718492;
+            font-size: 13px;
+        }
+
+        .admin-user {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 9px 13px;
+            background: rgba(255,255,255,.04);
+            border: 1px solid rgba(255,255,255,.07);
+            border-radius: 12px;
+            font-size: 12px;
+        }
+
+        .admin-user i {
+            color: #20c8ff;
+        }
+
+        /* =========================
+           STATS
+        ========================== */
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+            margin-bottom: 25px;
+        }
+
+        .stat {
+            padding: 20px;
+            border-radius: 17px;
+            background: #0c1b26;
+            border: 1px solid rgba(255,255,255,.06);
+            transition: .25s ease;
+        }
+
+        .stat:hover {
+            transform: translateY(-3px);
+            border-color: rgba(32,200,255,.18);
+        }
+
+        .stat-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .stat-label {
+            color: #718492;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: .4px;
+        }
+
+        .stat-icon {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 11px;
+            background: rgba(24,189,245,.1);
+            color: #20c8ff;
+        }
+
+        .stat-number {
+            margin-top: 15px;
+            font-size: 27px;
+            font-weight: 800;
+        }
+
+        .stat-description {
+            margin-top: 5px;
+            color: #718492;
+            font-size: 11px;
+        }
+
+        /* =========================
+           TABLE
+        ========================== */
+
+        .appointments-card {
+            overflow: hidden;
+            background: #0c1b26;
+            border: 1px solid rgba(255,255,255,.06);
+            border-radius: 18px;
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 20px;
+            border-bottom: 1px solid rgba(255,255,255,.06);
+        }
+
+        .card-header h2 {
+            margin: 0;
+            font-size: 17px;
+        }
+
+        .card-header span {
+            display: block;
+            margin-top: 5px;
+            color: #718492;
+            font-size: 11px;
+        }
+
+        .table-wrapper {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            min-width: 1200px;
+            border-collapse: collapse;
+        }
+
+        th {
+            padding: 14px 18px;
+            text-align: left;
+            color: #647784;
+            font-size: 10px;
+            letter-spacing: .8px;
+            text-transform: uppercase;
+            background: rgba(255,255,255,.02);
+        }
+
+        td {
+            padding: 16px 18px;
+            border-top: 1px solid rgba(255,255,255,.045);
+            color: #d4dce1;
+            font-size: 12px;
+        }
+
+        tr:hover td {
+            background: rgba(255,255,255,.018);
+        }
+
+        .id {
+            color: #20c8ff;
+            font-weight: 700;
+        }
+
+        .name {
+            color: #fff;
+            font-weight: 700;
+        }
+
+        .email {
+            color: #91a2ae;
+        }
+
+        /* =========================
+           RANDEVU KODU
+        ========================== */
+
+        .appointment-code {
+            display: inline-block;
+            padding: 6px 9px;
+            border-radius: 7px;
+            background: rgba(24,189,245,.08);
+            border: 1px solid rgba(24,189,245,.13);
+            color: #20c8ff;
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: .5px;
+        }
+
+        /* =========================
+           STATUS
+        ========================== */
+
+        .status {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 9px;
+            border-radius: 20px;
+            font-size: 10px;
+            font-weight: 700;
+        }
+
+        .status.pending {
+            color: #ffc44d;
+            background: rgba(255,196,77,.08);
+            border: 1px solid rgba(255,196,77,.14);
+        }
+
+        .status.approved {
+            color: #2ee59d;
+            background: rgba(46,229,157,.08);
+            border: 1px solid rgba(46,229,157,.14);
+        }
+
+        .status.cancelled {
+            color: #ff6f6f;
+            background: rgba(255,111,111,.08);
+            border: 1px solid rgba(255,111,111,.14);
+        }
+
+        /* =========================
+           ACTIONS
+        ========================== */
+
+        .actions {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+        }
+
+        .actions form {
+            margin: 0;
+        }
+
+        .action-btn {
+            width: 34px;
+            height: 34px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+            border: 1px solid transparent;
+            cursor: pointer;
+            font-size: 12px;
+            transition: .2s;
+        }
+
+        .action-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .approve {
+            color: #2ee59d;
+            background: rgba(46,229,157,.08);
+            border-color: rgba(46,229,157,.15);
+        }
+
+        .approve:hover {
+            background: rgba(46,229,157,.17);
+        }
+
+        .cancel {
+            color: #ffc44d;
+            background: rgba(255,196,77,.08);
+            border-color: rgba(255,196,77,.15);
+        }
+
+        .cancel:hover {
+            background: rgba(255,196,77,.17);
+        }
+
+        .delete {
+            color: #ff6f6f;
+            background: rgba(255,111,111,.08);
+            border-color: rgba(255,111,111,.15);
+        }
+
+        .delete:hover {
+            background: rgba(255,111,111,.17);
+        }
+
+        /* =========================
+           EMPTY
+        ========================== */
+
+        .empty {
+            padding: 60px 20px;
+            text-align: center;
+            color: #657784;
+        }
+
+        .empty i {
+            display: block;
+            margin-bottom: 15px;
+            font-size: 35px;
+            color: #304957;
+        }
+
+        /* =========================
+           RESPONSIVE
+        ========================== */
+
+        @media (max-width: 1100px) {
+
+            .stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+        }
+
+        @media (max-width: 750px) {
+
+            .sidebar {
+                position: static;
+                width: 100%;
+                height: auto;
+                border-right: 0;
+                border-bottom: 1px solid rgba(255,255,255,.07);
+            }
+
+            .logout {
+                position: static;
+                margin-top: 15px;
+            }
+
+            .main {
+                margin-left: 0;
+                padding: 20px;
+            }
+
+            .topbar {
+                align-items: flex-start;
+                flex-direction: column;
+                gap: 15px;
+            }
+
+        }
+
+        @media (max-width: 500px) {
+
+            .stats {
+                grid-template-columns: 1fr;
+            }
+
+            .main {
+                padding: 15px;
+            }
+
+            .topbar h1 {
+                font-size: 23px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<div class="dashboard">
+
+
+    <!-- =========================
+         SIDEBAR
+    ========================== -->
+
+    <aside class="sidebar">
+
+        <div class="brand">
+
+            <div class="brand-icon">
+
+                <i class="fa-solid fa-code"></i>
+
+            </div>
+
+            <div>
+
+                <strong>Kadir Yazılım</strong>
+
+                <span>
+                    Yönetim Paneli
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <div class="menu-title">
+            YÖNETİM
+        </div>
+
+
+        <nav class="menu">
+
+            <a href="/admin/panel"
+               class="active">
+
+                <i class="fa-solid fa-chart-line"></i>
+
+                Dashboard
+
+            </a>
+
+
+            <a href="#appointments">
+
+                <i class="fa-solid fa-calendar-check"></i>
+
+                Randevular
+
+            </a>
+
+        </nav>
+
+
+        <div class="logout">
+
+            <nav class="menu">
+
+                <a href="/admin/cikis">
+
+                    <i class="fa-solid fa-right-from-bracket"></i>
+
+                    Çıkış Yap
+
+                </a>
+
+            </nav>
+
+        </div>
+
+    </aside>
+
+
+    <!-- =========================
+         MAIN
+    ========================== -->
+
+    <main class="main">
+
+
+        <div class="topbar">
+
+            <div>
+
+                <h1>
+                    Dashboard
+                </h1>
+
+                <p>
+                    Randevu sisteminizi buradan yönetin.
+                </p>
+
+            </div>
+
+
+            <div class="admin-user">
+
+                <i class="fa-solid fa-user-shield"></i>
+
+                <span>
+                    admin
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <!-- =========================
+             STATS
+        ========================== -->
+
+        <section class="stats">
+
+
+            <div class="stat">
+
+                <div class="stat-top">
+
+                    <span class="stat-label">
+                        TOPLAM RANDEVU
+                    </span>
+
+                    <div class="stat-icon">
+                        <i class="fa-solid fa-calendar-days"></i>
+                    </div>
+
+                </div>
+
+                <div class="stat-number">
+                    {{ appointments|length }}
+                </div>
+
+                <div class="stat-description">
+                    Sistemdeki tüm randevular
+                </div>
+
+            </div>
+
+
+            <div class="stat">
+
+                <div class="stat-top">
+
+                    <span class="stat-label">
+                        BEKLEMEDE
+                    </span>
+
+                    <div class="stat-icon">
+                        <i class="fa-solid fa-clock"></i>
+                    </div>
+
+                </div>
+
+                <div class="stat-number">
+
+                    {{ appointments
+                       |selectattr('5', 'equalto', 'pending')
+                       |list
+                       |length }}
+
+                </div>
+
+                <div class="stat-description">
+                    İşlem bekleyen randevular
+                </div>
+
+            </div>
+
+
+            <div class="stat">
+
+                <div class="stat-top">
+
+                    <span class="stat-label">
+                        ONAYLANAN
+                    </span>
+
+                    <div class="stat-icon">
+                        <i class="fa-solid fa-circle-check"></i>
+                    </div>
+
+                </div>
+
+                <div class="stat-number">
+
+                    {{ appointments
+                       |selectattr('5', 'equalto', 'approved')
+                       |list
+                       |length }}
+
+                </div>
+
+                <div class="stat-description">
+                    Onaylanan randevular
+                </div>
+
+            </div>
+
+
+            <div class="stat">
+
+                <div class="stat-top">
+
+                    <span class="stat-label">
+                        İPTAL
+                    </span>
+
+                    <div class="stat-icon">
+                        <i class="fa-solid fa-circle-xmark"></i>
+                    </div>
+
+                </div>
+
+                <div class="stat-number">
+
+                    {{ appointments
+                       |selectattr('5', 'equalto', 'cancelled')
+                       |list
+                       |length }}
+
+                </div>
+
+                <div class="stat-description">
+                    İptal edilen randevular
+                </div>
+
+            </div>
+
+
+        </section>
+
+
+        <!-- =========================
+             RANDEVULAR
+        ========================== -->
+
+        <section
+            class="appointments-card"
+            id="appointments"
+        >
+
+            <div class="card-header">
+
+                <div>
+
+                    <h2>
+                        Randevular
+                    </h2>
+
+                    <span>
+                        PostgreSQL veritabanından alınmaktadır.
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            {% if appointments %}
+
+            <div class="table-wrapper">
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+
+                            <th>ID</th>
+                            <th>Ad Soyad</th>
+                            <th>E-posta</th>
+                            <th>Telefon</th>
+                            <th>Görüşme</th>
+                            <th>Randevu Kodu</th>
+                            <th>Durum</th>
+                            <th>Tarih</th>
+                            <th>İşlemler</th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody>
+
+                    {% for appointment in appointments %}
+
+                    <tr>
+
+                        <td class="id">
+                            #{{ appointment[0] }}
+                        </td>
+
+                        <td class="name">
+                            {{ appointment[1] }}
+                        </td>
+
+                        <td class="email">
+                            {{ appointment[2] }}
+                        </td>
+
+                        <td>
+                            {{ appointment[3] or '-' }}
+                        </td>
+
+                        <td>
+                            {{ appointment[4] or '-' }}
+                        </td>
+
+                        <td>
+
+                            <span class="appointment-code">
+                                {{ appointment[6] or '-' }}
+                            </span>
+
+                        </td>
+
+                        <td>
+
+                            {% if appointment[5] == 'approved' %}
+
+                                <span class="status approved">
+                                    <i class="fa-solid fa-check"></i>
+                                    Onaylandı
+                                </span>
+
+                            {% elif appointment[5] == 'cancelled' %}
+
+                                <span class="status cancelled">
+                                    <i class="fa-solid fa-xmark"></i>
+                                    İptal
+                                </span>
+
+                            {% else %}
+
+                                <span class="status pending">
+                                    <i class="fa-solid fa-clock"></i>
+                                    Beklemede
+                                </span>
+
+                            {% endif %}
+
+                        </td>
+
+                        <td>
+
+                            {% if appointment[7] %}
+
+                                {{ appointment[7].strftime('%d.%m.%Y %H:%M') }}
+
+                            {% else %}
+
+                                -
+
+                            {% endif %}
+
+                        </td>
+
+                        <td>
+
+                            <div class="actions">
+
+                                {% if appointment[5] == 'pending' %}
+
+                                    <form
+                                        method="POST"
+                                        action="/admin/randevu/{{ appointment[0] }}/onayla"
+                                    >
+
+                                        <button
+                                            type="submit"
+                                            class="action-btn approve"
+                                            title="Randevuyu Onayla"
+                                        >
+
+                                            <i class="fa-solid fa-check"></i>
+
+                                        </button>
+
+                                    </form>
+
+
+                                    <form
+                                        method="POST"
+                                        action="/admin/randevu/{{ appointment[0] }}/iptal"
+                                    >
+
+                                        <button
+                                            type="submit"
+                                            class="action-btn cancel"
+                                            title="Randevuyu İptal Et"
+                                        >
+
+                                            <i class="fa-solid fa-xmark"></i>
+
+                                        </button>
+
+                                    </form>
+
+                                {% endif %}
+
+
+                                <form
+                                    method="POST"
+                                    action="/admin/randevu/{{ appointment[0] }}/sil"
+                                    onsubmit="return confirm('Bu randevuyu silmek istediğinize emin misiniz?');"
+                                >
+
+                                    <button
+                                        type="submit"
+                                        class="action-btn delete"
+                                        title="Randevuyu Sil"
+                                    >
+
+                                        <i class="fa-solid fa-trash"></i>
+
+                                    </button>
+
+                                </form>
+
+                            </div>
+
+                        </td>
+
+                    </tr>
+
+                    {% endfor %}
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+            {% else %}
+
+            <div class="empty">
+
+                <i class="fa-regular fa-calendar-xmark"></i>
+
+                Henüz randevu bulunmuyor.
+
+            </div>
+
+            {% endif %}
+
+        </section>
+
+    </main>
+
+</div>
+
+</body>
+
+</html>

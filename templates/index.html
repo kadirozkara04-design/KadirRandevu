@@ -5,27 +5,55 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kadir Yazılım Randevu Merkezi</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='navbar.css') }}">
 </head>
 <body>
 
-  <nav class="navbar">
+    
 
-    <div class="logo">
-        KADİR YAZILIM
-    </div>
-
-    <div class="nav-links">
-        <a href="/">Ana Sayfa</a>
-        <a href="/randevu">Randevu</a>
-        <a href="#">SSS</a>
-        <a href="#">İletişim</a>
-
+ <nav class="navbar navbar-expand-lg ">
+  <div class="container navbg">
+    <a class="navbar-brand " href="index.html"><video width="auto" height="50"autoplay muted loop  disablePictureInPicture id="logo" style="padding-right: 20px;" class="vdomt1">
+  <source src="videos/kystresmi-00.webm" type="video/webm" class="vdomt1" >
+  Kadir Yazılım 
+</video></a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0" >
+        <li class="nav-item">
+          <a class="nav-link active " aria-current="page" href="index.html"><span class="navfntstl">Ana Sayfa</span> </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="hakkimizda.html"><span class="navfntstl">Hakkımızda</span> </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="iletisim.html"><span class="navfntstl">iletişim</span> </a>
+        </li>
+        <li>
+          <div class="pnl">
+          <div class="dropdown"  >
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+    <span ><i class="fa-solid fa-earth-americas   bar" style="padding-top: 2px; "></i></span>
+  </button>
+  <ul class="dropdown-menu " style="background-color: rgb(255, 255, 255);">
+    <li><a class="dropdown-item" href="index.html">Türkçe</a></li><hr>
+    <li><a class="dropdown-item " href="#">İngilizce</a></li>
+  </ul>
+</div>
+        </li>
+        <li>
+         
         <a href="/randevu-sorgula" class="login-btn">
             Randevu Sorgula
         </a>
+        </li>
     </div>
-
+  </div>
 </nav>
+
+
 
 
 <section class="hero">

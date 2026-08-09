@@ -1,0 +1,607 @@
+
+body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    overflow-x: hidden;
+}
+.navbg{
+    background-color: #0d4a75a2;
+    backdrop-filter: blur(5px);
+    border-radius: 10px;
+    height: 50px;
+    position: fixed;
+    top: 10px;
+    right: 0px;
+    left: 0px;
+    z-index: 9999;
+}  
+
+.vdomt1{
+    margin-top: 10px;
+
+}
+
+@media screen and (max-width: 991px) {
+    .vdomt1{
+        margin-top: 1px;
+    }
+}
+@media screen and (max-width: 570px) {
+    .navbar{
+        position: fixed;
+        top: 0;
+        right: 11px;
+    }
+}
+#research-toast {
+    position: fixed;
+    right: 20px;
+    bottom: 20px;
+    background: #7c94a2d8;
+    backdrop-filter: blur(10px);
+    color: #fff;
+    padding: 14px 18px;
+    border-radius: 14px;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    max-width: 280px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.3s ease;
+    z-index: 99999;
+}
+#research-toast.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+.msjystl{
+  font-family: "Cascadia Code", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: weight;
+  font-style: normal;
+}
+.nvbosluk{
+    margin-left: 50px;
+}
+.pnl{
+    margin-left: 390px;
+}
+@media screen and (min-width: 1200px) {
+    .pnl{
+        margin-left: 550px;
+    }
+}
+@media screen and (min-width: 1400px) {
+    .pnl{
+        margin-left: 750px;
+    }
+}
+@media screen and (max-width: 991px) {
+    .pnl{
+        margin-left: 1px;
+    }
+}
+    
+
+.bar{
+    color: aliceblue; 
+    font-size: 20px; 
+    padding-top: 2px; 
+}
+.bar:hover{
+    color: #012032;
+    text-shadow: 0px 2px 5px rgb(255, 255, 255);
+    transition-duration: 1s;  
+}
+
+.navfntstl{
+    color: #fff;
+    font-family: "Oswald", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: weight;
+    font-style: normal;
+    
+}
+.navfntstl:hover{
+    color: #012032;
+    text-shadow: 0px 2px 5px rgb(255, 255, 255);
+    transition-duration: 1s;
+
+}
+#playBtn{
+width:82px;height:82px;border-radius:50%;
+background:rgba(179, 187, 228, 0.106);
+backdrop-filter:blur(25px);
+-webkit-backdrop-filter:blur(2px);
+display:flex;align-items:center;justify-content:center;
+transition:.5s;z-index:5;border:none;
+}
+#playBtn svg{width:44px;height:44px;fill:white}
+.move-down{top:auto!important;bottom:70px!important}
+
+
+.offcanvas{width:100vw!important; z-index:2000 !important;}
+.offcanvas-backdrop{z-index:1999 !important;}
+
+
+
+/* Video alanındaki öğeleri her ekran boyutunda ortala */
+.containervdo{
+    position: relative;
+    overflow: hidden;
+}
+
+#heroVideo{
+    width: 100%;
+    height: 100vh;
+    object-fit: cover;
+    display: block;
+}
+#heroVideok{
+    width: 100%;
+    height: 100vh;
+    object-fit: cover;
+    display: none;
+}
+
+/* Play butonu tam ortada */
+#playBtn{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+/* Aşağı kaydır alanı responsive */
+#scrollArea{
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 40px;
+    width: 100%;
+    padding: 0 15px;
+}
+
+/* Mobil için */
+@media screen and (max-width: 768px){
+
+    #playBtn{
+        width: 65px;
+        height: 65px;
+    }
+
+    #playBtn svg{
+        width: 34px;
+        height: 34px;
+    }
+
+    #scrollArea{
+        bottom: 25px;
+    }
+
+    .scroll-text{
+        font-size: 12px;
+    }
+
+    .mouse{
+        width: 22px;
+        height: 36px;
+    }
+}
+
+/* Küçük telefonlar */
+@media screen and (max-width: 480px){
+
+    #playBtn{
+        width: 58px;
+        height: 58px;
+    }
+
+    #playBtn svg{
+        width: 30px;
+        height: 30px;
+    }
+
+    #scrollArea{
+        bottom: 18px;
+    }
+}
+
+/* Mouse Gövdesi */
+    .mouse {
+        width: 26px;
+        height: 42px;
+        border: 2px solid white;
+        border-radius: 15px;
+        position: relative;
+    }
+
+    /* Hareket Eden Top/Tekerlek */
+    .mouse::before {
+        content: '';
+        width: 4px;
+        height: 4px;
+        background-color: white;
+        border-radius: 50%;
+        position: absolute;
+        top: 8px;
+        left: 50%;
+        transform: translateX(-50%);
+        animation: scroll-dot 1.6s infinite ease-in-out;
+    }
+
+    /* Kayma Animasyonu */
+    @keyframes scroll-dot {
+        0% {
+            opacity: 0;
+            top: 8px;
+        }
+        30% {
+            opacity: 1;
+        }
+        100% {
+            opacity: 0;
+            top: 25px;
+        }
+    }
+
+    /* Metin için hafif bir nefes alma efekti (isteğe bağlı) */
+    .scroll-text {
+        font-size: 14px;
+        letter-spacing: 1px;
+        opacity: 0.9;
+    }
+
+.kartalni{
+    margin-top: 100px;
+    display: grid;
+    justify-content: center;
+    align-items: center;
+}
+
+.kartlar{
+    width: 200px;
+    height: 300px;
+    border-radius: 20px;
+    margin: 25px;
+    display: grid;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+.kartlar:hover{
+    box-shadow: 0px 10px 10px 0px rgb(0, 0, 0);
+    transition-duration: 1s;
+}
+.mt-50{
+    margin-top: 50px;
+}
+.aktfdil{
+    background-color: #025d92;
+    color: white;
+    border-radius: 5px;
+    
+}
+.archivo-black-regular {
+  font-family: "Archivo Black", sans-serif;
+  font-weight: 400;
+  font-size: x-large;
+  font-style: normal;
+}
+/* Yükleme Ekranı (Tüm ekranı kaplayan sabit katman) */
+.splash-screen {
+    position: fixed; /* Sitenin en üstünde sabit durur */
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: #050505;
+    background-image: radial-gradient(circle at center, #151515 0%, #000000 100%);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 99999; /* Diğer tüm içeriklerin üstünde olmasını sağlar */
+    transition: opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1), transform 0.6s ease;
+    opacity: 1; 
+}
+
+/* Diğer tasarımsal kodlar aynı kalıyor */
+.logo-box {
+    position: relative;
+    padding: 40px;
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 32px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5), inset 0 0 20px rgba(255, 255, 255, 0.02);
+    animation: float 4s ease-in-out infinite;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.logo {
+    width: 120px;
+    height: auto;
+    filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.2));
+}
+
+.progress-container {
+    margin-top: 50px;
+    width: 260px;
+    height: 6px;
+    background: rgba(255, 255, 255, 0.07);
+    border-radius: 10px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: inset 0 1px 3px rgba(0,0,0,0.5);
+}
+
+.progress-bar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, #8b0000, #024e75);
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(255, 26, 26, 0.6);
+    /* Animasyonu JS ile tetikleyeceğiz */
+}
+
+/* Animasyonlar */
+@keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+@keyframes loadProgress {
+    0% { width: 0%; }
+    20% { width: 10%; }
+    50% { width: 60%; }
+    80% { width: 85%; }
+    100% { width: 100%; }
+}
+
+/* Kaybolma Efekti */
+.fade-out {
+    opacity: 0;
+    transform: scale(1.05);
+    pointer-events: none;
+}
+/* Kaydırma Kilidi Sınıfı */
+body.scroll-kilit {
+    overflow: hidden !important;
+}
+
+
+/* Responsiv İşlemleri - Kadir Yazılım */
+.reklam{
+    width:500px;
+    height:auto;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+@media (max-width: 550px) {
+  .reklam {
+    width:400px;
+  }
+}
+@media (max-width: 450px) {
+  .reklam {
+    width:300px;
+  }
+}
+@media (max-width: 315px) {
+  .reklam {
+    width:200px;
+  }
+}
+.misviz{
+    width: 523px;
+    height: 220px;
+}
+
+@media (max-width: 1400px) {
+  .misviz {
+    width:500px;
+    height: auto;
+  }
+}
+@media (max-width: 1200px) {
+  .misviz {
+    width:400px;
+    height: auto;
+  }
+}
+@media (max-width: 992px) {
+  .misviz {
+    width:300px;
+    height: auto;
+  }
+}
+@media (max-width: 767px) {
+  .misviz {
+    width:200px;
+    height: auto;
+  }
+}
+@media (max-width: 495px) {
+  .misviz {
+    width:150px;
+    height: auto;
+  }
+}
+@media (max-width: 396px) {
+  .misviz {
+    width:100px;
+    height: auto;
+  }
+}
+@media (max-width: 296px) {
+  .misviz {
+    width:50px;
+    height: auto;
+  }
+}
+.iletisim{
+    width: 497px;
+    height: 118px;
+    cursor: pointer;
+}
+@media (max-width: 515px) {
+  .iletisim {
+    width:400px;
+    height: auto;
+  }
+}
+@media (max-width: 425px) {
+  .iletisim {
+    width:350px;
+    height: auto;
+  }
+}
+@media (max-width: 365px) {
+  .iletisim {
+    width:300px;
+    height: auto;
+  }
+}
+@media (max-width: 325px) {
+  .iletisim {
+    width:250px;
+    height: auto;
+  }
+}
+@media screen and (max-width:730px)
+{
+#heroVideok{display: inline;}
+#heroVideo{display:none;}
+}
+@media screen and (min-width:1800px)
+{
+#heroVideo{display:inline;}
+#heroVideok{display: none;}
+}
+.form-container{
+    width:100%;
+    overflow:hidden;
+    border-radius:15px;
+}
+
+.form-container iframe{
+    width:100%;
+    min-height:1500px;
+    border:none;
+}
+.tiklama{
+    text-decoration: none !important;
+    color: #ffffff !important;
+    cursor: pointer;
+}
+.tiklamagri{
+    text-decoration: none !important;
+    color: #90a2a6 !important;
+    cursor: pointer;
+}
+.actives {
+    position: relative;
+    display: inline-block;
+}
+
+.actives::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -6px;
+    width: 100%;
+    height: 3px;
+    background: #2d9bb9;
+    border-radius: 10px;
+}
+@media (max-width: 991.98px) {
+    .navbar-nav {
+        background: #111827;
+        border-radius: 12px;
+        padding-left: 20px !important;
+    }
+}
+/* Kurucumuzdan Mesaj Bölümü - Kadir Yazılım */
+.alanana{
+    width:auto;
+    height: 800px;
+    background-color: #024e75;
+    border-radius: 20px;
+    padding: 0px;
+}
+.alanblm{
+    width:auto;
+    height: auto;
+    display:flex;
+
+}
+.alan1{
+    width:200px;
+    height: 400px;
+    background-color: #177794;
+    display:flex;
+    justify-content: center;
+    align-items: center;    
+    border-radius: 20px 0px 5px 0px;
+}
+.alan1yazi{
+    width: auto;
+    height: auto;
+    display:grid;
+    justify-content: center;
+    align-items: center;     
+}
+.alan2{
+    width:75%;
+    height:auto;
+    background-color: #073a4a;  
+    border-radius: 20px;  
+    margin-left: 20px;
+    padding: 10px;
+    color: #EAF4F8;
+    margin-top: 20px;
+}
+@media (max-width: 768px) {
+    #yzi {
+        font-size: x-small;
+    }
+}
+@media (max-width: 346px) {
+    #yzi {
+        font-size: xx-small;
+    }
+}
+.alanana1{
+    width:auto;
+    height: 80px;
+    background-image: linear-gradient(to top,rgba(255, 255, 255, 0.9), rgba(78, 110, 120, 0.9) );
+    border-radius: 20px 20px 0px 0px ;
+    padding: 0px;
+    margin-top: 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.bebas-neue-regular {
+  font-family: "Bebas Neue", sans-serif;
+  font-weight: 500;
+  font-style: normal;
+  font-size: x-large;
+}
+.dvl{
+    width:300px;
+    height:auto;
+}
+.dvl:hover{
+    box-shadow: #41647a 0px 0px 50px 0px;
+    border-radius: 25px;
+}

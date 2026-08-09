@@ -1,5 +1,6 @@
 import os
 import secrets
+
 import psycopg2
 
 from dotenv import load_dotenv
@@ -37,7 +38,7 @@ app.secret_key = secret_key
 app.config["SESSION_COOKIE_HTTPONLY"] = True
 app.config["SESSION_COOKIE_SAMESITE"] = "Lax"
 
-# HTTPS / Render için True
+# Render / HTTPS için
 app.config["SESSION_COOKIE_SECURE"] = True
 
 
@@ -90,12 +91,19 @@ def init_db():
     cursor.execute("""
         CREATE TABLE IF NOT EXISTS appointments (
             id SERIAL PRIMARY KEY,
+
             name VARCHAR(100) NOT NULL,
+
             email VARCHAR(150) NOT NULL,
+
             phone VARCHAR(30),
+
             service VARCHAR(100),
+
             status VARCHAR(30) DEFAULT 'pending',
+
             appointment_code VARCHAR(20) UNIQUE,
+
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         )
     """)
@@ -113,14 +121,19 @@ def init_db():
 @app.route("/")
 def ana_sayfa():
 
-    return render_template("index.html")
+    return render_template(
+        "index.html"
+    )
 
 
 # =========================================================
 # RANDEVU
 # =========================================================
 
-@app.route("/randevu", methods=["GET", "POST"])
+@app.route(
+    "/randevu",
+    methods=["GET", "POST"]
+)
 def randevu():
 
     if request.method == "POST":
@@ -177,7 +190,9 @@ def randevu():
             SELECT id
             FROM appointments
             WHERE appointment_code = %s
-        """, (appointment_code,))
+        """, (
+            appointment_code,
+        ))
 
         existing = cursor.fetchone()
 
@@ -190,7 +205,9 @@ def randevu():
                 SELECT id
                 FROM appointments
                 WHERE appointment_code = %s
-            """, (appointment_code,))
+            """, (
+                appointment_code,
+            ))
 
             existing = cursor.fetchone()
 
@@ -239,10 +256,15 @@ def randevu():
 
         return render_template(
             "randevu-basarili.html",
+
             name=name,
+
             email=email,
+
             phone=phone,
+
             service=service,
+
             appointment_code=appointment_code
         )
 
@@ -276,7 +298,9 @@ def randevu_sorgula():
 
         if not appointment_code:
 
-            error = "Lütfen randevu kodunuzu girin."
+            error = (
+                "Lütfen randevu kodunuzu girin."
+            )
 
 
         else:
@@ -297,7 +321,9 @@ def randevu_sorgula():
                     created_at
                 FROM appointments
                 WHERE appointment_code = %s
-            """, (appointment_code,))
+            """, (
+                appointment_code,
+            ))
 
 
             appointment = cursor.fetchone()
@@ -317,7 +343,9 @@ def randevu_sorgula():
 
     return render_template(
         "randevu-sorgula.html",
+
         appointment=appointment,
+
         error=error
     )
 
@@ -352,7 +380,11 @@ def randevu_sil():
 
         return render_template(
             "randevu-sorgula.html",
-            error="Randevu kodu ve e-posta adresi gereklidir."
+
+            error=(
+                "Randevu kodu ve e-posta adresi "
+                "gereklidir."
+            )
         )
 
 
@@ -397,6 +429,7 @@ def randevu_sil():
 
         return render_template(
             "randevu-sorgula.html",
+
             error=(
                 "Randevu kodu veya e-posta adresi "
                 "eşleşmiyor. Randevu silinemedi."
@@ -420,7 +453,6 @@ def randevu_sil():
 
     conn.commit()
 
-
     cursor.close()
     conn.close()
 
@@ -437,6 +469,7 @@ def randevu_sil():
 
     return render_template(
         "randevu-sorgula.html",
+
         success=(
             "Randevunuz başarıyla silindi."
         )
@@ -513,7 +546,10 @@ def admin_login():
 
         return render_template(
             "admin-login.html",
-            error="Kullanıcı adı veya şifre hatalı!"
+
+            error=(
+                "Kullanıcı adı veya şifre hatalı!"
+            )
         )
 
 
@@ -564,6 +600,7 @@ def admin_panel():
 
     return render_template(
         "admin-panel.html",
+
         appointments=appointments
     )
 
@@ -599,7 +636,6 @@ def randevu_onayla(appointment_id):
 
 
     conn.commit()
-
 
     cursor.close()
     conn.close()
@@ -642,7 +678,6 @@ def randevu_iptal(appointment_id):
 
     conn.commit()
 
-
     cursor.close()
     conn.close()
 
@@ -682,7 +717,6 @@ def admin_randevu_sil(appointment_id):
 
 
     conn.commit()
-
 
     cursor.close()
     conn.close()

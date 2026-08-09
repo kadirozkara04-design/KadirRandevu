@@ -1,7 +1,9 @@
 import os
 import secrets
-
 import psycopg2
+
+from datetime import timezone
+from zoneinfo import ZoneInfo
 
 from dotenv import load_dotenv
 from flask import Flask, render_template, request, redirect, url_for, session
@@ -43,7 +45,31 @@ app.config["SESSION_COOKIE_SECURE"] = True
 
 
 # =========================================================
-# YARDIMCI FONKSİYON
+# TÜRKİYE SAATİ
+# =========================================================
+
+TURKEY_TIMEZONE = ZoneInfo("Europe/Istanbul")
+
+
+def turkey_time(dt):
+    """
+    Veritabanından gelen created_at değerini
+    Türkiye saatine çevirir.
+    """
+
+    if dt is None:
+        return None
+
+    # PostgreSQL TIMESTAMP değerimiz timezone'suz gelirse
+    # UTC kabul ediyoruz.
+    if dt.tzinfo is None:
+        dt = dt.replace(tzinfo=timezone.utc)
+
+    return dt.astimezone(TURKEY_TIMEZONE)
+
+
+# =========================================================
+# ADMIN GİRİŞ KONTROLÜ
 # =========================================================
 
 def admin_giris_kontrolu():
@@ -91,19 +117,12 @@ def init_db():
     cursor.execute("""
         CREATE TABLE IF NOT EXISTS appointments (
             id SERIAL PRIMARY KEY,
-
             name VARCHAR(100) NOT NULL,
-
             email VARCHAR(150) NOT NULL,
-
             phone VARCHAR(30),
-
             service VARCHAR(100),
-
             status VARCHAR(30) DEFAULT 'pending',
-
             appointment_code VARCHAR(20) UNIQUE,
-
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         )
     """)
@@ -130,10 +149,7 @@ def ana_sayfa():
 # RANDEVU
 # =========================================================
 
-@app.route(
-    "/randevu",
-    methods=["GET", "POST"]
-)
+@app.route("/randevu", methods=["GET", "POST"])
 def randevu():
 
     if request.method == "POST":
@@ -256,15 +272,10 @@ def randevu():
 
         return render_template(
             "randevu-basarili.html",
-
             name=name,
-
             email=email,
-
             phone=phone,
-
             service=service,
-
             appointment_code=appointment_code
         )
 
@@ -298,9 +309,7 @@ def randevu_sorgula():
 
         if not appointment_code:
 
-            error = (
-                "Lütfen randevu kodunuzu girin."
-            )
+            error = "Lütfen randevu kodunuzu girin."
 
 
         else:
@@ -343,9 +352,7 @@ def randevu_sorgula():
 
     return render_template(
         "randevu-sorgula.html",
-
         appointment=appointment,
-
         error=error
     )
 
@@ -380,11 +387,7 @@ def randevu_sil():
 
         return render_template(
             "randevu-sorgula.html",
-
-            error=(
-                "Randevu kodu ve e-posta adresi "
-                "gereklidir."
-            )
+            error="Randevu kodu ve e-posta adresi gereklidir."
         )
 
 
@@ -429,7 +432,6 @@ def randevu_sil():
 
         return render_template(
             "randevu-sorgula.html",
-
             error=(
                 "Randevu kodu veya e-posta adresi "
                 "eşleşmiyor. Randevu silinemedi."
@@ -469,10 +471,7 @@ def randevu_sil():
 
     return render_template(
         "randevu-sorgula.html",
-
-        success=(
-            "Randevunuz başarıyla silindi."
-        )
+        success="Randevunuz başarıyla silindi."
     )
 
 
@@ -546,10 +545,7 @@ def admin_login():
 
         return render_template(
             "admin-login.html",
-
-            error=(
-                "Kullanıcı adı veya şifre hatalı!"
-            )
+            error="Kullanıcı adı veya şifre hatalı!"
         )
 
 
@@ -598,9 +594,27 @@ def admin_panel():
     conn.close()
 
 
+    # =====================================================
+    # TÜRKİYE SAATİNE ÇEVİR
+    # =====================================================
+
+    appointments = [
+        (
+            appointment[0],
+            appointment[1],
+            appointment[2],
+            appointment[3],
+            appointment[4],
+            appointment[5],
+            appointment[6],
+            turkey_time(appointment[7])
+        )
+        for appointment in appointments
+    ]
+
+
     return render_template(
         "admin-panel.html",
-
         appointments=appointments
     )
 

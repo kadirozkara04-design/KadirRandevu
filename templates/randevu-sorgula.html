@@ -3,748 +3,1199 @@
 
 <head>
 
-    <meta charset="UTF-8">
+<meta charset="UTF-8">
 
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
 
-    <title>Randevu Sorgula | Kadir Yazılım</title>
+<title>Randevu Sorgula | Kadir Yazılım</title>
 
-    <link rel="stylesheet"
-          href="{{ url_for('static', filename='style.css') }}">
+<link rel="stylesheet"
+      href="{{ url_for('static', filename='style.css') }}">
 
-    <link rel="stylesheet"
-          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+<link rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
 
-    <style>
 
-        * {
-            box-sizing: border-box;
-        }
+<style>
 
-        body {
-            margin: 0;
-            min-height: 100vh;
+* {
+    box-sizing: border-box;
+}
 
-            font-family:
-                Arial,
-                Helvetica,
-                sans-serif;
+body {
 
-            background:
-                radial-gradient(
-                    circle at top,
-                    rgba(0, 183, 255, 0.14),
-                    transparent 40%
-                ),
-                #071018;
+    margin: 0;
 
-            color: #fff;
-        }
+    min-height: 100vh;
 
-        .query-page {
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
 
-            min-height: 100vh;
+    background:
+        radial-gradient(
+            circle at top,
+            rgba(0, 183, 255, 0.14),
+            transparent 40%
+        ),
+        #071018;
 
-            display: flex;
-            align-items: center;
-            justify-content: center;
+    color: #fff;
+}
 
-            padding: 30px 20px;
-        }
 
-        .query-card {
+.query-page {
 
-            width: 100%;
-            max-width: 620px;
+    min-height: 100vh;
 
-            padding: 45px 40px;
+    display: flex;
 
-            text-align: center;
+    align-items: center;
 
-            background:
-                rgba(12, 25, 36, 0.94);
+    justify-content: center;
 
-            border:
-                1px solid
-                rgba(0, 200, 255, 0.18);
+    padding: 30px 20px;
+}
 
-            border-radius: 28px;
 
-            box-shadow:
-                0 25px 70px
-                rgba(0, 0, 0, 0.45),
+.query-card {
 
-                0 0 50px
-                rgba(0, 180, 255, 0.08);
+    width: 100%;
 
-            animation: cardIn 0.6s ease;
-        }
+    max-width: 620px;
 
-        @keyframes cardIn {
+    padding: 45px 40px;
 
-            from {
-                opacity: 0;
-                transform:
-                    translateY(25px)
-                    scale(0.97);
-            }
+    text-align: center;
 
-            to {
-                opacity: 1;
-                transform:
-                    translateY(0)
-                    scale(1);
-            }
-        }
+    background:
+        rgba(12, 25, 36, 0.94);
 
-        .query-icon {
+    border:
+        1px solid
+        rgba(0, 200, 255, 0.18);
 
-            width: 85px;
-            height: 85px;
+    border-radius: 28px;
 
-            margin:
-                0 auto 25px;
+    box-shadow:
+        0 25px 70px
+        rgba(0, 0, 0, 0.45),
 
-            display: flex;
-            align-items: center;
-            justify-content: center;
+        0 0 50px
+        rgba(0, 180, 255, 0.08);
 
-            border-radius: 50%;
+    animation:
+        cardIn 0.6s ease;
+}
 
-            background:
-                rgba(24, 189, 245, 0.10);
 
-            border:
-                2px solid
-                rgba(24, 189, 245, 0.35);
+@keyframes cardIn {
 
-            color: #27c9ff;
+    from {
 
-            font-size: 32px;
+        opacity: 0;
 
-            box-shadow:
-                0 0 35px
-                rgba(24, 189, 245, 0.10);
-        }
+        transform:
+            translateY(25px)
+            scale(0.97);
+    }
 
-        .query-badge {
+    to {
 
-            display: inline-block;
+        opacity: 1;
 
-            margin-bottom: 15px;
+        transform:
+            translateY(0)
+            scale(1);
+    }
+}
 
-            padding: 7px 14px;
 
-            border-radius: 50px;
+.query-icon {
 
-            background:
-                rgba(0, 200, 255, 0.10);
+    width: 85px;
 
-            border:
-                1px solid
-                rgba(0, 200, 255, 0.20);
+    height: 85px;
 
-            color: #42d9ff;
+    margin:
+        0 auto 25px;
 
-            font-size: 12px;
-            font-weight: 700;
+    display: flex;
 
-            letter-spacing: 1px;
-        }
+    align-items: center;
 
-        h1 {
+    justify-content: center;
 
-            margin: 0 0 15px;
+    border-radius: 50%;
 
-            font-size:
-                clamp(28px, 5vw, 40px);
-        }
+    background:
+        rgba(24, 189, 245, 0.10);
 
-        h1 span {
-            color: #27c9ff;
-        }
+    border:
+        2px solid
+        rgba(24, 189, 245, 0.35);
 
-        .description {
+    color: #27c9ff;
 
-            max-width: 470px;
+    font-size: 32px;
 
-            margin:
-                0 auto 30px;
+    box-shadow:
+        0 0 35px
+        rgba(24, 189, 245, 0.10);
+}
 
-            color: #aebdca;
 
-            line-height: 1.7;
+.query-badge {
 
-            font-size: 15px;
-        }
+    display: inline-block;
 
-        .query-form {
+    margin-bottom: 15px;
 
-            display: flex;
+    padding: 7px 14px;
 
-            gap: 10px;
+    border-radius: 50px;
 
-            margin-bottom: 20px;
-        }
+    background:
+        rgba(0, 200, 255, 0.10);
 
-        .code-input {
+    border:
+        1px solid
+        rgba(0, 200, 255, 0.20);
 
-            flex: 1;
+    color: #42d9ff;
 
-            width: 100%;
+    font-size: 12px;
 
-            padding: 16px 18px;
+    font-weight: 700;
 
-            border-radius: 12px;
+    letter-spacing: 1px;
+}
 
-            outline: none;
 
-            background:
-                rgba(255, 255, 255, 0.05);
+h1 {
 
-            border:
-                1px solid
-                rgba(255, 255, 255, 0.10);
+    margin: 0 0 15px;
 
-            color: #fff;
+    font-size:
+        clamp(28px, 5vw, 40px);
+}
 
-            font-size: 15px;
 
-            transition: 0.25s ease;
-        }
+h1 span {
 
-        .code-input:focus {
+    color: #27c9ff;
+}
 
-            border-color:
-                rgba(39, 201, 255, 0.55);
 
-            box-shadow:
-                0 0 20px
-                rgba(39, 201, 255, 0.08);
-        }
+.description {
 
-        .code-input::placeholder {
-            color: #71818d;
-        }
+    max-width: 470px;
 
-        .query-button {
+    margin:
+        0 auto 30px;
 
-            border: none;
+    color: #aebdca;
 
-            padding:
-                0 22px;
+    line-height: 1.7;
 
-            border-radius: 12px;
+    font-size: 15px;
+}
 
-            background: #18bdf5;
 
-            color: #041018;
+.query-form {
 
-            font-weight: 800;
+    display: flex;
 
-            cursor: pointer;
+    gap: 10px;
 
-            transition: 0.25s ease;
+    margin-bottom: 20px;
+}
 
-            white-space: nowrap;
-        }
 
-        .query-button:hover {
+.code-input {
 
-            transform:
-                translateY(-2px);
+    flex: 1;
 
-            box-shadow:
-                0 12px 25px
-                rgba(24, 189, 245, 0.20);
-        }
+    width: 100%;
 
-        .error-box {
+    padding: 16px 18px;
 
-            margin-top: 15px;
+    border-radius: 12px;
 
-            padding: 14px;
+    outline: none;
 
-            border-radius: 12px;
+    background:
+        rgba(255, 255, 255, 0.05);
 
-            background:
-                rgba(255, 70, 70, 0.08);
+    border:
+        1px solid
+        rgba(255, 255, 255, 0.10);
 
-            border:
-                1px solid
-                rgba(255, 70, 70, 0.20);
+    color: #fff;
 
-            color: #ff8080;
+    font-size: 15px;
 
-            font-size: 13px;
-        }
+    transition: 0.25s ease;
+}
 
-        /* =========================
-           RANDEVU SONUCU
-        ========================= */
 
-        .result-card {
+.code-input:focus {
 
-            margin-top: 25px;
+    border-color:
+        rgba(39, 201, 255, 0.55);
 
-            padding: 22px;
+    box-shadow:
+        0 0 20px
+        rgba(39, 201, 255, 0.08);
+}
 
-            text-align: left;
 
-            background:
-                rgba(255, 255, 255, 0.035);
+.code-input::placeholder {
 
-            border:
-                1px solid
-                rgba(255, 255, 255, 0.07);
+    color: #71818d;
+}
 
-            border-radius: 18px;
 
-            animation:
-                resultIn 0.5s ease;
-        }
+.query-button {
 
-        @keyframes resultIn {
+    border: none;
 
-            from {
-                opacity: 0;
-                transform:
-                    translateY(15px);
-            }
+    padding:
+        0 22px;
 
-            to {
-                opacity: 1;
-                transform:
-                    translateY(0);
-            }
-        }
+    border-radius: 12px;
 
-        .result-title {
+    background: #18bdf5;
 
-            display: flex;
-            align-items: center;
+    color: #041018;
 
-            gap: 9px;
+    font-weight: 800;
 
-            margin-bottom: 18px;
+    cursor: pointer;
 
-            font-size: 15px;
-            font-weight: 700;
-        }
+    transition: 0.25s ease;
 
-        .result-title i {
-            color: #00dc96;
-        }
+    white-space: nowrap;
+}
 
-        .result-row {
 
-            display: flex;
+.query-button:hover {
 
-            justify-content:
-                space-between;
+    transform:
+        translateY(-2px);
 
-            gap: 20px;
+    box-shadow:
+        0 12px 25px
+        rgba(24, 189, 245, 0.20);
+}
 
-            padding: 12px 0;
 
-            border-bottom:
-                1px solid
-                rgba(255,255,255,0.06);
-        }
+.error-box {
 
-        .result-row:last-child {
-            border-bottom: none;
-        }
+    margin-top: 15px;
 
-        .result-label {
+    padding: 14px;
 
-            color: #8798a6;
+    border-radius: 12px;
 
-            font-size: 13px;
-        }
+    background:
+        rgba(255, 70, 70, 0.08);
 
-        .result-value {
+    border:
+        1px solid
+        rgba(255, 70, 70, 0.20);
 
-            color: #fff;
+    color: #ff8080;
 
-            font-size: 13px;
+    font-size: 13px;
 
-            font-weight: 600;
+    line-height: 1.5;
+}
 
-            text-align: right;
 
-            word-break: break-word;
-        }
+.success-box {
 
-        .appointment-code {
+    margin-top: 15px;
 
-            color: #27c9ff;
+    padding: 15px;
 
-            letter-spacing: 1.5px;
-        }
+    border-radius: 12px;
 
-        /* DURUMLAR */
+    background:
+        rgba(0, 220, 150, 0.08);
 
-        .status {
+    border:
+        1px solid
+        rgba(0, 220, 150, 0.20);
 
-            display: inline-flex;
+    color: #00dc96;
 
-            align-items: center;
+    font-size: 13px;
 
-            gap: 6px;
+    line-height: 1.5;
+}
 
-            padding: 7px 11px;
 
-            border-radius: 30px;
+/* =====================================================
+   SONUÇ
+===================================================== */
 
-            font-size: 12px;
-        }
+.result-card {
 
-        .status-pending {
+    margin-top: 25px;
 
-            color: #ffc107;
+    padding: 22px;
 
-            background:
-                rgba(255, 193, 7, 0.10);
+    text-align: left;
 
-            border:
-                1px solid
-                rgba(255, 193, 7, 0.20);
-        }
+    background:
+        rgba(255, 255, 255, 0.035);
 
-        .status-approved {
+    border:
+        1px solid
+        rgba(255, 255, 255, 0.07);
 
-            color: #00dc96;
+    border-radius: 18px;
 
-            background:
-                rgba(0, 220, 150, 0.10);
+    animation:
+        resultIn 0.5s ease;
+}
 
-            border:
-                1px solid
-                rgba(0, 220, 150, 0.20);
-        }
 
-        .status-cancelled {
+@keyframes resultIn {
 
-            color: #ff6868;
+    from {
 
-            background:
-                rgba(255, 70, 70, 0.10);
+        opacity: 0;
 
-            border:
-                1px solid
-                rgba(255, 70, 70, 0.20);
-        }
+        transform:
+            translateY(15px);
+    }
 
-        .back-button {
+    to {
 
-            display: inline-flex;
+        opacity: 1;
 
-            align-items: center;
+        transform:
+            translateY(0);
+    }
+}
 
-            justify-content: center;
 
-            gap: 8px;
+.result-title {
 
-            width: 100%;
+    display: flex;
 
-            min-height: 50px;
+    align-items: center;
 
-            margin-top: 20px;
+    gap: 9px;
 
-            border-radius: 12px;
+    margin-bottom: 18px;
 
-            text-decoration: none;
+    font-size: 15px;
 
-            background:
-                rgba(255, 255, 255, 0.06);
+    font-weight: 700;
+}
 
-            border:
-                1px solid
-                rgba(255, 255, 255, 0.10);
 
-            color: #fff;
+.result-title i {
 
-            font-size: 14px;
+    color: #00dc96;
+}
 
-            font-weight: 700;
 
-            transition: 0.25s ease;
-        }
+.result-row {
 
-        .back-button:hover {
+    display: flex;
 
-            background:
-                rgba(255, 255, 255, 0.10);
+    justify-content:
+        space-between;
 
-            transform:
-                translateY(-2px);
-        }
+    gap: 20px;
 
-        .footer {
+    padding: 12px 0;
 
-            margin-top: 25px;
+    border-bottom:
+        1px solid
+        rgba(255,255,255,0.06);
+}
 
-            color: #647482;
 
-            font-size: 12px;
-        }
+.result-row:last-child {
 
-        @media (max-width: 600px) {
+    border-bottom: none;
+}
 
-            .query-page {
-                padding: 20px 14px;
-            }
 
-            .query-card {
+.result-label {
 
-                padding:
-                    32px 20px;
+    color: #8798a6;
 
-                border-radius: 22px;
-            }
+    font-size: 13px;
+}
 
-            .query-form {
-                flex-direction: column;
-            }
 
-            .query-button {
+.result-value {
 
-                min-height: 50px;
+    color: #fff;
 
-                width: 100%;
-            }
+    font-size: 13px;
 
-            .result-card {
-                padding: 17px;
-            }
+    font-weight: 600;
 
-            .result-row {
+    text-align: right;
 
-                flex-direction:
-                    column;
+    word-break: break-word;
+}
 
-                gap: 5px;
-            }
 
-            .result-value {
-                text-align: left;
-            }
+.appointment-code {
 
-        }
+    color: #27c9ff;
 
-    </style>
+    letter-spacing: 1.5px;
+}
+
+
+/* =====================================================
+   DURUMLAR
+===================================================== */
+
+.status {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 6px;
+
+    padding: 7px 11px;
+
+    border-radius: 30px;
+
+    font-size: 12px;
+}
+
+
+.status-pending {
+
+    color: #ffc107;
+
+    background:
+        rgba(255, 193, 7, 0.10);
+
+    border:
+        1px solid
+        rgba(255, 193, 7, 0.20);
+}
+
+
+.status-approved {
+
+    color: #00dc96;
+
+    background:
+        rgba(0, 220, 150, 0.10);
+
+    border:
+        1px solid
+        rgba(0, 220, 150, 0.20);
+}
+
+
+.status-cancelled {
+
+    color: #ff6868;
+
+    background:
+        rgba(255, 70, 70, 0.10);
+
+    border:
+        1px solid
+        rgba(255, 70, 70, 0.20);
+}
+
+
+/* =====================================================
+   SİLME ALANI
+===================================================== */
+
+.delete-section {
+
+    margin-top: 22px;
+
+    padding-top: 20px;
+
+    border-top:
+        1px solid
+        rgba(255,255,255,0.07);
+}
+
+
+.delete-title {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+    margin-bottom: 8px;
+
+    color: #ff7373;
+
+    font-size: 14px;
+
+    font-weight: 700;
+}
+
+
+.delete-description {
+
+    margin:
+        0 0 14px;
+
+    color: #81919e;
+
+    font-size: 12px;
+
+    line-height: 1.6;
+}
+
+
+.delete-form {
+
+    display: flex;
+
+    gap: 9px;
+}
+
+
+.email-input {
+
+    flex: 1;
+
+    width: 100%;
+
+    padding: 14px 15px;
+
+    border-radius: 11px;
+
+    outline: none;
+
+    background:
+        rgba(255, 255, 255, 0.04);
+
+    border:
+        1px solid
+        rgba(255, 255, 255, 0.09);
+
+    color: #fff;
+
+    font-size: 13px;
+
+    transition: 0.25s ease;
+}
+
+
+.email-input:focus {
+
+    border-color:
+        rgba(255, 90, 90, 0.55);
+
+    box-shadow:
+        0 0 18px
+        rgba(255, 70, 70, 0.08);
+}
+
+
+.email-input::placeholder {
+
+    color: #667681;
+}
+
+
+.delete-button {
+
+    border: none;
+
+    padding:
+        0 18px;
+
+    border-radius: 11px;
+
+    background:
+        rgba(255, 70, 70, 0.12);
+
+    border:
+        1px solid
+        rgba(255, 70, 70, 0.25);
+
+    color: #ff7474;
+
+    font-size: 13px;
+
+    font-weight: 800;
+
+    cursor: pointer;
+
+    white-space: nowrap;
+
+    transition: 0.25s ease;
+}
+
+
+.delete-button:hover {
+
+    background:
+        rgba(255, 70, 70, 0.20);
+
+    border-color:
+        rgba(255, 70, 70, 0.40);
+
+    transform:
+        translateY(-2px);
+
+    box-shadow:
+        0 10px 22px
+        rgba(255, 70, 70, 0.10);
+}
+
+
+/* =====================================================
+   ANA SAYFA
+===================================================== */
+
+.back-button {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 8px;
+
+    width: 100%;
+
+    min-height: 50px;
+
+    margin-top: 20px;
+
+    border-radius: 12px;
+
+    text-decoration: none;
+
+    background:
+        rgba(255, 255, 255, 0.06);
+
+    border:
+        1px solid
+        rgba(255, 255, 255, 0.10);
+
+    color: #fff;
+
+    font-size: 14px;
+
+    font-weight: 700;
+
+    transition: 0.25s ease;
+}
+
+
+.back-button:hover {
+
+    background:
+        rgba(255, 255, 255, 0.10);
+
+    transform:
+        translateY(-2px);
+}
+
+
+.footer {
+
+    margin-top: 25px;
+
+    color: #647482;
+
+    font-size: 12px;
+}
+
+
+/* =====================================================
+   MOBİL
+===================================================== */
+
+@media (max-width: 600px) {
+
+    .query-page {
+
+        padding:
+            20px 14px;
+    }
+
+
+    .query-card {
+
+        padding:
+            32px 20px;
+
+        border-radius: 22px;
+    }
+
+
+    .query-form {
+
+        flex-direction:
+            column;
+    }
+
+
+    .query-button {
+
+        min-height: 50px;
+
+        width: 100%;
+    }
+
+
+    .result-card {
+
+        padding: 17px;
+    }
+
+
+    .result-row {
+
+        flex-direction:
+            column;
+
+        gap: 5px;
+    }
+
+
+    .result-value {
+
+        text-align: left;
+    }
+
+
+    .delete-form {
+
+        flex-direction:
+            column;
+    }
+
+
+    .email-input {
+
+        min-height: 50px;
+    }
+
+
+    .delete-button {
+
+        min-height: 50px;
+
+        width: 100%;
+    }
+
+}
+
+</style>
 
 </head>
 
 
 <body>
 
+
 <div class="query-page">
 
-    <div class="query-card">
+<div class="query-card">
 
-        <div class="query-icon">
-            <i class="fa-solid fa-magnifying-glass"></i>
-        </div>
 
-        <div class="query-badge">
-            KADİR YAZILIM GÖRÜŞME MERKEZİ
-        </div>
+    <!-- İKON -->
 
-        <h1>
-            Randevunuzu <span>Sorgulayın</span>
-        </h1>
+    <div class="query-icon">
 
-        <p class="description">
-            Randevu oluşturduktan sonra size verilen
-            randevu kodunu girerek randevu bilgilerinizi
-            ve güncel durumunuzu görüntüleyebilirsiniz.
-        </p>
-
-
-        <!-- SORGU FORMU -->
-
-        <form method="POST"
-              action="/randevu-sorgula"
-              class="query-form">
-
-            <input
-                type="text"
-                name="appointment_code"
-                class="code-input"
-                placeholder="Örn: KR-A83F21C4"
-                maxlength="20"
-                autocomplete="off"
-                required
-            >
-
-            <button
-                type="submit"
-                class="query-button">
-
-                <i class="fa-solid fa-magnifying-glass"></i>
-                Sorgula
-
-            </button>
-
-        </form>
-
-
-        <!-- HATA -->
-
-        {% if error %}
-
-        <div class="error-box">
-
-            <i class="fa-solid fa-circle-exclamation"></i>
-
-            {{ error }}
-
-        </div>
-
-        {% endif %}
-
-
-        <!-- SONUÇ -->
-
-        {% if appointment %}
-
-        <div class="result-card">
-
-            <div class="result-title">
-
-                <i class="fa-solid fa-circle-check"></i>
-
-                Randevu Bulundu
-
-            </div>
-
-
-            <div class="result-row">
-
-                <span class="result-label">
-                    Randevu Kodu
-                </span>
-
-                <span class="result-value appointment-code">
-                    {{ appointment[6] }}
-                </span>
-
-            </div>
-
-
-            <div class="result-row">
-
-                <span class="result-label">
-                    Ad Soyad
-                </span>
-
-                <span class="result-value">
-                    {{ appointment[1] }}
-                </span>
-
-            </div>
-
-
-            <div class="result-row">
-
-                <span class="result-label">
-                    E-posta
-                </span>
-
-                <span class="result-value">
-                    {{ appointment[2] }}
-                </span>
-
-            </div>
-
-
-            <div class="result-row">
-
-                <span class="result-label">
-                    Telefon
-                </span>
-
-                <span class="result-value">
-                    {{ appointment[3] }}
-                </span>
-
-            </div>
-
-
-            <div class="result-row">
-
-                <span class="result-label">
-                    Görüşme Konusu
-                </span>
-
-                <span class="result-value">
-                    {{ appointment[4] }}
-                </span>
-
-            </div>
-
-
-            <div class="result-row">
-
-                <span class="result-label">
-                    Randevu Durumu
-                </span>
-
-                <span class="result-value">
-
-                    {% if appointment[5] == "approved" %}
-
-                        <span class="status status-approved">
-                            <i class="fa-solid fa-circle-check"></i>
-                            Onaylandı
-                        </span>
-
-                    {% elif appointment[5] == "cancelled" %}
-
-                        <span class="status status-cancelled">
-                            <i class="fa-solid fa-circle-xmark"></i>
-                            İptal Edildi
-                        </span>
-
-                    {% else %}
-
-                        <span class="status status-pending">
-                            <i class="fa-solid fa-clock"></i>
-                            Beklemede
-                        </span>
-
-                    {% endif %}
-
-                </span>
-
-            </div>
-
-        </div>
-
-        {% endif %}
-
-
-        <a href="/" class="back-button">
-
-            <i class="fa-solid fa-house"></i>
-
-            Ana Sayfaya Dön
-
-        </a>
-
-
-        <div class="footer">
-
-            Kadir Yazılım • Yeni nesil yazılım deneyimi
-
-        </div>
+        <i class="fa-solid fa-magnifying-glass"></i>
 
     </div>
 
+
+    <!-- BADGE -->
+
+    <div class="query-badge">
+
+        KADİR YAZILIM GÖRÜŞME MERKEZİ
+
+    </div>
+
+
+    <!-- BAŞLIK -->
+
+    <h1>
+
+        Randevunuzu
+        <span>Sorgulayın</span>
+
+    </h1>
+
+
+    <!-- AÇIKLAMA -->
+
+    <p class="description">
+
+        Randevu oluşturduktan sonra size verilen
+        randevu kodunu girerek randevu bilgilerinizi
+        ve güncel durumunuzu görüntüleyebilirsiniz.
+
+    </p>
+
+
+    <!-- ============================================
+         BAŞARILI MESAJ
+    ============================================= -->
+
+    {% if success %}
+
+    <div class="success-box">
+
+        <i class="fa-solid fa-circle-check"></i>
+
+        {{ success }}
+
+    </div>
+
+    {% endif %}
+
+
+    <!-- ============================================
+         SORGU FORMU
+    ============================================= -->
+
+    <form method="POST"
+          action="/randevu-sorgula"
+          class="query-form">
+
+        <input
+            type="text"
+            name="appointment_code"
+            class="code-input"
+            placeholder="Örn: KR-A83F21C4"
+            maxlength="20"
+            autocomplete="off"
+            required
+        >
+
+        <button
+            type="submit"
+            class="query-button">
+
+            <i class="fa-solid fa-magnifying-glass"></i>
+
+            Sorgula
+
+        </button>
+
+    </form>
+
+
+    <!-- ============================================
+         HATA
+    ============================================= -->
+
+    {% if error %}
+
+    <div class="error-box">
+
+        <i class="fa-solid fa-circle-exclamation"></i>
+
+        {{ error }}
+
+    </div>
+
+    {% endif %}
+
+
+    <!-- ============================================
+         SONUÇ
+    ============================================= -->
+
+    {% if appointment %}
+
+    <div class="result-card">
+
+
+        <!-- BAŞLIK -->
+
+        <div class="result-title">
+
+            <i class="fa-solid fa-circle-check"></i>
+
+            Randevu Bulundu
+
+        </div>
+
+
+        <!-- RANDEVU KODU -->
+
+        <div class="result-row">
+
+            <span class="result-label">
+
+                Randevu Kodu
+
+            </span>
+
+            <span class="result-value appointment-code">
+
+                {{ appointment[6] }}
+
+            </span>
+
+        </div>
+
+
+        <!-- AD SOYAD -->
+
+        <div class="result-row">
+
+            <span class="result-label">
+
+                Ad Soyad
+
+            </span>
+
+            <span class="result-value">
+
+                {{ appointment[1] }}
+
+            </span>
+
+        </div>
+
+
+        <!-- E-POSTA -->
+
+        <div class="result-row">
+
+            <span class="result-label">
+
+                E-posta
+
+            </span>
+
+            <span class="result-value">
+
+                {{ appointment[2] }}
+
+            </span>
+
+        </div>
+
+
+        <!-- TELEFON -->
+
+        <div class="result-row">
+
+            <span class="result-label">
+
+                Telefon
+
+            </span>
+
+            <span class="result-value">
+
+                {{ appointment[3] }}
+
+            </span>
+
+        </div>
+
+
+        <!-- GÖRÜŞME KONUSU -->
+
+        <div class="result-row">
+
+            <span class="result-label">
+
+                Görüşme Konusu
+
+            </span>
+
+            <span class="result-value">
+
+                {{ appointment[4] }}
+
+            </span>
+
+        </div>
+
+
+        <!-- DURUM -->
+
+        <div class="result-row">
+
+            <span class="result-label">
+
+                Randevu Durumu
+
+            </span>
+
+            <span class="result-value">
+
+
+                {% if appointment[5] == "approved" %}
+
+                    <span class="status status-approved">
+
+                        <i class="fa-solid fa-circle-check"></i>
+
+                        Onaylandı
+
+                    </span>
+
+
+                {% elif appointment[5] == "cancelled" %}
+
+                    <span class="status status-cancelled">
+
+                        <i class="fa-solid fa-circle-xmark"></i>
+
+                        İptal Edildi
+
+                    </span>
+
+
+                {% else %}
+
+                    <span class="status status-pending">
+
+                        <i class="fa-solid fa-clock"></i>
+
+                        Beklemede
+
+                    </span>
+
+                {% endif %}
+
+
+            </span>
+
+        </div>
+
+
+        <!-- ========================================
+             RANDEVU SİLME
+        ========================================= -->
+
+        <div class="delete-section">
+
+
+            <div class="delete-title">
+
+                <i class="fa-solid fa-trash"></i>
+
+                Randevuyu Sil
+
+            </div>
+
+
+            <p class="delete-description">
+
+                Randevuyu silmek için, randevu oluştururken
+                kullandığınız e-posta adresini girmeniz
+                gerekmektedir.
+
+            </p>
+
+
+            <form
+                method="POST"
+                action="/randevu-sil"
+                class="delete-form"
+                onsubmit="return confirm('Bu randevuyu silmek istediğinize emin misiniz? Bu işlem geri alınamaz.');"
+            >
+
+
+                <!-- RANDEVU KODU -->
+
+                <input
+                    type="hidden"
+                    name="appointment_code"
+                    value="{{ appointment[6] }}"
+                >
+
+
+                <!-- E-POSTA -->
+
+                <input
+                    type="email"
+                    name="email"
+                    class="email-input"
+                    placeholder="Randevudaki e-posta adresiniz"
+                    autocomplete="email"
+                    required
+                >
+
+
+                <!-- SİL -->
+
+                <button
+                    type="submit"
+                    class="delete-button"
+                >
+
+                    <i class="fa-solid fa-trash"></i>
+
+                    Randevuyu Sil
+
+                </button>
+
+
+            </form>
+
+
+        </div>
+
+
+    </div>
+
+    {% endif %}
+
+
+    <!-- ============================================
+         ANA SAYFA
+    ============================================= -->
+
+    <a href="/"
+       class="back-button">
+
+        <i class="fa-solid fa-house"></i>
+
+        Ana Sayfaya Dön
+
+    </a>
+
+
+    <!-- FOOTER -->
+
+    <div class="footer">
+
+        Kadir Yazılım • Yeni nesil yazılım deneyimi
+
+    </div>
+
+
 </div>
+
+</div>
+
 
 </body>
 
